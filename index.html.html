@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio de Sesión</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .logo-container img {
+            width: 200px; 
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #e97509;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e67913;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 15px;
+        }
+
+        .link-container {
+            display: none;
+            margin-top: 20px;
+        }
+
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+|
+    </style>
+</head>
+<body>
+    <div id="login-container" class="container">
+        <div class="logo-container">
+            <img src="tro.png" alt="Logo"> <!-- Ruta de la imagen del logo -->
+        </div>
+        <h2>Iniciar Sesión</h2>
+        <form id="login-form">
+            <input type="password" id="keyword" placeholder="Ingrese la palabra clave" required>
+            <button type="submit">Ingresar</button>
+        </form>
+        <p id="error-message" class="error-message" style="display: none;">Palabra clave incorrecta</p>
+    </div>
+
+    <div id="link-container" class="container link-container">
+        <p>Has ingresado correctamente.</p>
+        <a href="otra_pagina.html">Click aquí</a>
+        <button id="logout-button">Cerrar sesión</button>
+    </div>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const keyword = document.getElementById("keyword").value;
+            const correctKeyword = "crismar"; // Define aquí la palabra clave correcta
+
+            if (keyword === correctKeyword) {
+                localStorage.setItem("loggedIn", true); // Almacena que el usuario ha iniciado sesión
+                showLinkContainer();
+            } else {
+                document.getElementById("error-message").style.display = "block";
+            }
+        });
+
+        document.getElementById("logout-button").addEventListener("click", function() {
+            localStorage.removeItem("loggedIn");
+            showLoginContainer();
+        });
+
+        function showLinkContainer() {
+            document.getElementById("login-container").style.display = "none";
+            document.getElementById("link-container").style.display = "block";
+        }
+
+        function showLoginContainer() {
+            document.getElementById("login-container").style.display = "block";
+            document.getElementById("link-container").style.display = "none";
+            document.getElementById("error-message").style.display = "none";
+        }
+
+        // Verifica si el usuario ya ha iniciado sesión
+        if (localStorage.getItem("loggedIn")) {
+            showLinkContainer();
+        } else {
+            showLoginContainer();
+        }
+    </script>
+</body>
+</html>
